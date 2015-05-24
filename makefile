@@ -1,16 +1,31 @@
 # q3 square tunneling
 
 TARGET = a.out
-OBJECTS = sde.o const.o main.o
-COMMON_MOD = sde.f08 const.f08 main.f08
+OBJECTS = const.o globals.o subfuncs.o subprogs.o main.o
+COMMON_MOD = const.f90 globals.f90 subfuncs.f90 subprogs.f90 main.f90
 
-F08 = /usr/local/bin/gfortran
-FFLAGS = -fimplicit-none -fbounds-check
+FORTRAN = /usr/local/bin/gfortran 
+FFLAGS = -fimplicit-none -fbounds-check 
+# FORTRAN = /opt/intel/bin/ifort
+# FORTRAN = ifort
 
-INCLUDE = -I/usr/local/include
-LIB = -L/usr/local/lib
-LAPACK = -llapack -lblas
-FFW = -lfftw3 -lm
+
+
+# LIB = -L/usr/local/lib
+# INCLUDE = -I/usr/local/include
+# LAPACK = -lscalapack -lmpi -lblas
+
+# LIB = -L/usr/local/opt/lapack/lib
+# INCLUDE = -I/usr/local/opt/lapack/include
+# LIB = -L/usr/lib
+# INCLUDE = -I/usr/include
+LAPACK = -llapack
+
+# LIB = -L/usr/lib
+# INCLUDE = -I/usr/include
+# LAPACK = -lopenblas
+
+# FFW = -lfftw3 -lm
 
 
 
@@ -19,10 +34,13 @@ FFW = -lfftw3 -lm
 all: clean ${TARGET}
 
 ${TARGET}: ${OBJECTS}
-	${F08} -o $@ ${OBJECTS}
+	# ${FORTRAN} -o $@ ${OBJECTS} 
+	${FORTRAN} -o $@ ${OBJECTS} ${LAPACK}
+	# ${FORTRAN} -o $@ ${OBJECTS} ${INCLUDE} ${LIB} ${LAPACK}
 
 ${OBJECTS}: ${COMMON_MOD}
-	${F08} -c ${COMMON_MOD} ${FFLAGS}
+	${FORTRAN} -c ${COMMON_MOD} 
+	# ${FORTRAN} -c ${COMMON_MOD} ${FFLAGS} 
 
 
 
