@@ -1,8 +1,8 @@
 # q3 square tunneling
 
 TARGET = a.out
-OBJECTS = const.o globals.o subfuncs.o subprogs.o main.o
-COMMON_MOD = const.f90 globals.f90 subfuncs.f90 subprogs.f90 main.f90
+OBJECTS = const.o subfuncs.o globals.o subprogs.o main.o
+COMMON_MOD = const.f90 subfuncs.f90 globals.f90 subprogs.f90 main.f90
 
 FORTRAN = /usr/local/bin/gfortran 
 FFLAGS = -fimplicit-none -fbounds-check 
