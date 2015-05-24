@@ -11,8 +11,8 @@ module input
 	real(8), parameter :: p_energy = 20.d0/si_e_evt/au_hr ! eV to au
 	real(8), parameter :: p_angle = 60.d0/360.d0*(2.d0*mt_pi) ! do to radian (0~90, not 0)
 
-! 	real(8), parameter :: b_poten = 0.d0/si_e_evt/au_hr ! eV to au	
-	real(8), parameter :: b_poten = 30.d0/si_e_evt/au_hr ! eV to au	
+	real(8), parameter :: b_poten = 0.d0/si_e_evt/au_hr ! eV to au	
+! 	real(8), parameter :: b_poten = 30.d0/si_e_evt/au_hr ! eV to au	
 	real(8), parameter :: b_width_x = 10.d0/1.d10/au_bh ! aa to au
 	real(8), parameter :: b_width_y = 10.d0/1.d10/au_bh ! aa to au
 	real(8), parameter :: b_width = (b_width_x**2.d0 +b_width_y**2.d0)**0.5d0 
@@ -21,7 +21,7 @@ module input
 
 	integer, parameter :: cal_n = 2**8
 ! 	integer, parameter :: cal_e = 2**10
-	complex(8), parameter :: psi_k_outter = mt_i*(2.d0*p_mass*p_energy)**0.5d0
+	complex(16), parameter :: psi_k_outter = mt_i*(2.d0*p_mass*p_energy)**0.5d0
 	integer, parameter :: psi_n = 10**2
 	integer, parameter :: psi_m = 10**1
 
@@ -36,8 +36,8 @@ contains
 
 function f(x, y) result(result) 
 	real(8), intent(in) :: x
-	complex(8), intent(in) :: y(1:2)   
-	complex(8) :: result(1:2)
+	complex(16), intent(in) :: y(1:2)   
+	complex(16) :: result(1:2)
 
 	result(1) = psi_k_outter*1.d0*y(2)
 	result(2) = psi_k_outter*(1.d0 - b_poten/p_energy)*y(1)
@@ -50,11 +50,11 @@ end function f
 
 subroutine cal(width, r_zero, input, ref, tran, fun)
 	real(8), intent(in) :: width, r_zero
-	complex(8), intent(out) :: input, ref, tran
-	complex(8), intent(out) :: fun(1:2, 0:cal_n)
+	complex(16), intent(out) :: input, ref, tran
+	complex(16), intent(out) :: fun(1:2, 0:cal_n)
 	
 	real(8), save :: r(0:cal_n), dr
-	complex(8), save :: tem(1:2)
+	complex(16), save :: tem(1:2)
 	integer :: i 
 
 	dr = width/dble(cal_n)
@@ -113,8 +113,8 @@ program main
 	real(8), save :: y(-psi_n:psi_n, -psi_n:psi_n), dy, tmp_y
 	real(8), save :: l(-psi_n:psi_n), dl
 	real(8), save :: psi_width, psi_zero 
-	complex(8), save :: c_input, c_refle, c_trans
-	complex(8), save :: psi_fun(1:2, 0:cal_n)
+	complex(16), save :: c_input, c_refle, c_trans
+	complex(16), save :: psi_fun(1:2, 0:cal_n)
 	integer :: i, j, u 
 
 
@@ -234,10 +234,10 @@ program main
 		c_trans = 1.d0
 
 		do i = -psi_n, psi_n
-			write(03, *) x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, &
+			write(03, '(99(E19.12, 1X))') x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, &
 							abs(c_input*exp(psi_k_outter*l(i)))**2.d0
 		enddo
-		write(03, *)
+		write(03, '(99(E19.12, 1X))')
 
 	else 
 		write(*, *) 'plot', 'case 2'
@@ -246,7 +246,7 @@ program main
 		do i = -psi_n, psi_n
 			if(l(i) < psi_zero) then 
 
-				write(03, *) x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, & 
+				write(03, '(99(E19.12, 1X))') x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, & 
 ! 								abs(c_input*exp(psi_k_outter*l(i))) ! @
 								abs(c_input*exp(psi_k_outter*l(i)) +c_refle*exp(-psi_k_outter*l(i)))**2.d0
 
@@ -258,21 +258,21 @@ program main
 ! 					tmp_x = (psi_width/dble(psi_n)*dble(u))*cos(p_angle) -dl*dble(j)*sin(p_angle)
 ! 					tmp_y = (psi_width/dble(psi_n)*dble(u))*sin(p_angle) +dl*dble(j)*cos(p_angle)
 
-					write(03, *) tmp_x*1.d10*au_bh, &
+					write(03, '(99(E19.12, 1X))') tmp_x*1.d10*au_bh, &
 								 tmp_y*1.d10*au_bh, &
 									abs(psi_fun(1, u))**2.d0
-! 					write(03, *)
+! 					write(03, '(99(E19.12, 1X))')
 				enddo
 
 			else 
 
-				write(03, *) x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, &
+				write(03, '(99(E19.12, 1X))') x(i, j)*1.d10*au_bh, y(i, j)*1.d10*au_bh, &
 ! 								abs(0.d0*exp(psi_k_outter*(l(i)-b_width)))**2.d0 ! @
 								abs(c_trans*exp(psi_k_outter*(l(i)-b_width)))**2.d0
 
 			endif
 		enddo
-		write(03, *)
+		write(03, '(99(E19.12, 1X))')
 
 	endif 
 	write(*, *) 'hito roof owari', j

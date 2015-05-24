@@ -12,14 +12,14 @@ contains
 subroutine rk4_vec(f_vec, dx, x, y)	
 	interface
 		function f_vec(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:2)
-			complex(kind(0.d0)) :: result(1:size(y(1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:2)
+			complex(16) :: result(1:size(y(1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:))), k(1:size(y(1:)), 1:4)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:)
+	complex(16) :: tmp(1:size(y(1:))), k(1:size(y(1:)), 1:4)
 
 	tmp(:) = y(:)
 
@@ -42,14 +42,14 @@ end subroutine rk4_vec
 subroutine rk4_mat(f_mat, dx, x, y)	
 	interface
 		function f_mat(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:, 1:)
-			complex(kind(0.d0)) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:, 1:)
+			complex(16) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:, 1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:13)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:, 1:)
+	complex(16) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:13)
 
 	tmp(:, :) = y(:, :)
 
@@ -87,14 +87,14 @@ end subroutine rk4_mat
 subroutine rk5_mat(f_mat, dx, x, y)	
 	interface
 		function f_mat(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:, 1:)
-			complex(kind(0.d0)) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:, 1:)
+			complex(16) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:, 1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:6)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:, 1:)
+	complex(16) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:6)
 
 	tmp(:, :) = y(:, :)
 
@@ -155,14 +155,14 @@ end subroutine rk5_mat
 subroutine rk6_mat(f_mat, dx, x, y)	
 	interface
 		function f_mat(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:, 1:)
-			complex(kind(0.d0)) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:, 1:)
+			complex(16) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:, 1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:8)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:, 1:)
+	complex(16) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:8)
 
 	tmp(:, :) = y(:, :)
 
@@ -241,14 +241,14 @@ end subroutine rk6_mat
 subroutine rk8_vec(f_vec, dx, x, y)	
 	interface
 		function f_vec(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:2)
-			complex(kind(0.d0)) :: result(1:size(y(1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:2)
+			complex(16) :: result(1:size(y(1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:))), k(1:size(y(1:)), 1:13)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:)
+	complex(16) :: tmp(1:size(y(1:))), k(1:size(y(1:)), 1:13)
 
 	! kokokara syuusei
 	tmp(:) = y(:)
@@ -354,14 +354,14 @@ end subroutine rk8_vec
 subroutine rk8_mat(f_mat, dx, x, y)	
 	interface
 		function f_mat(x, y) result(result)
-			double precision, intent(in) :: x
-			complex(kind(0.d0)), intent(in) :: y(1:, 1:)
-			complex(kind(0.d0)) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
+			real(8), intent(in) :: x
+			complex(16), intent(in) :: y(1:, 1:)
+			complex(16) :: result(1:size(y(1:, 1)), 1:size(y(1, 1:)))
 		end function
 	end interface
-	double precision, intent(in) :: dx, x
-	complex(kind(0.d0)), intent(inout) :: y(1:, 1:)
-	complex(kind(0.d0)) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:13)
+	real(8), intent(in) :: dx, x
+	complex(16), intent(inout) :: y(1:, 1:)
+	complex(16) :: tmp(1:size(y(1:, 1)), 1:size(y(1, 1:))), k(1:size(y(1:, 1)), 1:size(y(1, 1:)), 1:13)
 
 	tmp(:, :) = y(:, :)
 
